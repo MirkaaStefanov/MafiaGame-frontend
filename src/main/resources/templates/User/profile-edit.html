@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <!--    LINKS  -->
+    <th:block th:insert="~{fragments/links}"></th:block>
+
+    <title> Редактиране </title>
+    <link rel="icon" type="image/x-icon" href="/img/photos/noImage.png">
+    <link href="/css/form.css" rel="stylesheet">
+</head>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const navbar = document.getElementById("sidebar");
+    console.log(navbar);
+    const toggler = document.querySelector("a.sidebar-toggle");
+    toggler.addEventListener("click", () => {
+    navbar.classList.toggle("collapsed");
+    });
+});
+</script>
+<body>
+<div class="wrapper">
+    <!--    HEADER  -->
+    <th:block th:insert="~{fragments/header}"></th:block>
+    <div class="main">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-toggle js-sidebar-toggle">
+                <i class="hamburger align-self-center"></i>
+            </a>
+        </nav>
+        <main class="content">
+            <div class="form-container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card custom-card-width-lg">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Редактирай Потребител</h5>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{'/user/edit/' + ${user.id}}" method="post" th:object="${user}">
+                                    <!--                                    <form th:action="@{'/client/edit/' + ${client.id}}" method="get" th:object="${client}">-->
+                                    <div class="form-group">
+                                        <label for="username">Потребителско име</label>
+                                        <input type="text" class="form-control" id="username" name="username"
+                                               th:field="*{username}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="firstname">Първо име</label>
+                                        <input type="text" class="form-control" id="firstname" name="firstname"
+                                               th:field="*{firstname}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname">Фамилно име</label>
+                                        <input type="text" class="form-control" id="lastname" name="lastname"
+                                               th:field="*{lastname}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Адрес</label>
+                                        <input type="text" class="form-control" id="address" name="address"
+                                               th:field="*{address}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Е-поща</label>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                               th:field="*{email}" required>
+                                        <p th:if="${param.error}" class="text-danger" style="margin-top: 15px;"> Потребител с този имейл вече съществува! </p>
+                                    </div>
+                                    <input type="hidden" th:field="*{password}" th:value="${user.password}">
+                                    <input type="hidden" th:field="*{role}" th:value="${user.role}">
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Редактирай</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>

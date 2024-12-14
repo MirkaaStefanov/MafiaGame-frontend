@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <!--    LINKS  -->
+    <th:block th:insert="~{fragments/links}"></th:block>
+
+    <title> Потрeбители </title>
+    <link rel="icon" type="image/x-icon" href="/img/photos/noImage.png">
+    <link href="/css/form.css" rel="stylesheet">
+</head>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const navbar = document.getElementById("sidebar");
+        const toggler = document.querySelector("a.sidebar-toggle");
+        toggler.addEventListener("click", () => {
+            navbar.classList.toggle("collapsed");
+        });
+
+        // Show/hide client selection based on role selection
+        const roleSelect = document.getElementById("role");
+        const clientSelection = document.getElementById("clientSelection");
+        const clientID = document.getElementById("clientID");
+
+        roleSelect.addEventListener("change", function() {
+            if (this.value === "CUSTOMER") {
+                clientSelection.style.display = "block";
+                clientID.selectedIndex = 0; // Reset client selection
+                clientID.required = true; // Make clientID required
+            } else {
+                clientSelection.style.display = "none";
+                clientID.selectedIndex = 0; // Reset to the first option
+                clientID.required = false; // Remove required attribute
+                clientID.value = ""; // Optionally reset value
+            }
+        });
+
+        // Set clientID to null if not selected on form submission
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function(event) {
+            if (roleSelect.value === "CUSTOMER" && clientID.value === "") {
+                event.preventDefault(); // Prevent form submission
+                alert("Моля, изберете клиент!"); // Alert for required selection
+            } else if (roleSelect.value !== "CUSTOMER") {
+                clientID.value = null; // Set clientID to null if role is not CUSTOMER
+            }
+        });
+
+        // Initialize visibility on page load
+        if (roleSelect.value !== "CUSTOMER") {
+            clientSelection.style.display = "none";
+            clientID.required = false; // Ensure required is false
+        }
+    });
+</script>
+<body>
+<div class="wrapper">
+    <!--    HEADER  -->
+    <th:block th:insert="~{fragments/header}"></th:block>
+    <div class="main">
+        <nav class="navbar navbar-expand navbar-light navbar-bg">
+            <a class="sidebar-toggle js-sidebar-toggle">
+                <i class="hamburger align-self-center"></i>
+            </a>
+        </nav>
+        <main class="content">
+            <div class="form-container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card custom-card-width-lg">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Създай Потребител</h5>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/user/submit}" method="post" th:object="${user}">
+                                    <div class="form-group">
+                                        <label for="username">Потребителско име</label>
+                                        <input type="text" class="form-control" id="username" name="username"
+                                               th:field="*{username}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="firstname">Първо име</label>
+                                        <input type="text" class="form-control" id="firstname" name="firstname"
+                                               th:field="*{firstname}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastName">Фамилно име</label>
+                                        <input type="text" class="form-control" id="lastName" name="lastName"
+                                               th:field="*{lastname}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Адрес</label>
+                                        <input type="text" class="form-control" id="address" name="address"
+                                               th:field="*{address}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Е-поща</label>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                               th:field="*{email}" required>
+                                        <div th:if="${emailAlreadyExists}"
+                                           class="text-danger" style="margin-top: 15px;"
+                                        th:text="${emailAlreadyExists}"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Парола</label>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                               th:field="*{password}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="role">Роля</label>
+                                        <select class="form-control" id="role" name="role" th:field="*{role}" required>
+                                            <option value="ADMIN">Администратор</option>
+                                            <option value="PRODUCTION_MANAGER">Мениджър производство</option>
+                                            <option value="TRANSPORT_MANAGER">Мениджър транспорт</option>
+                                            <option value="CUSTOMER">Клиент</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="clientSelection" style="display: none;">
+                                        <label for="clientID">Управление за Клиент:</label>
+                                        <select class="form-control" id="clientID" name="clientID" th:field="*{clientID}">
+                                            <option value="" disabled selected>Изберете клиент</option>
+                                            <option th:each="client : ${clientsForSelect}"
+                                                    th:value="${client.id}"
+                                                    th:text="${client.idNumEIK} + ' - ' + ${client.businessName}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Създай</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+</html>
