@@ -22,12 +22,12 @@ public class AuthenticationController {
 
     private final AuthenticationClient authenticationClient;
     private final SessionManager sessionManager;
-    private static final String REDIRECTTXT = "/";
+    private static final String REDIRECTTXT = "redirect:/";
 
-    @GetMapping("/")
-    public String home(){
-        return "home";
-    }
+//    @GetMapping("/index")
+//    public String home(){
+//        return "home";
+//    }
 
     @GetMapping("/login")
     public String login(Model model, AuthenticationRequest authenticationRequest) {
@@ -48,7 +48,7 @@ public class AuthenticationController {
         try {
             AuthenticationResponse authenticationResponse = authenticationClient.authenticate(authenticationRequest);
             sessionManager.setSessionToken(httpServletRequest, authenticationResponse.getAccessToken(), authenticationResponse.getUser().getRole().toString());
-            return new ModelAndView("home");
+            return new ModelAndView(REDIRECTTXT);
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             modelAndView.addObject("error", "Невалидно име или парола");
