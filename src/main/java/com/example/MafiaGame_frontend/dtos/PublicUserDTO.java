@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PublicUserDTO {
+    private Long id;
     private String firstname;
 
     @JsonProperty("username")

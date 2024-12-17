@@ -19,12 +19,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import java.io.IOException;
 
 @FeignClient(name = "mafia-game-auth", url = "${backend.base-url}/auth")
+
 public interface AuthenticationClient {
     @PostMapping("/register")
     AuthenticationResponse register(@RequestBody RegisterRequest request);
 
     @PostMapping("/authenticate")
-    ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request);
+    AuthenticationResponse authenticate(@RequestBody AuthenticationRequest request);
 
     @PostMapping("/refresh-token")
     AuthenticationResponse refreshToken(@RequestBody RefreshTokenBodyDTO refreshTokenBody) throws IOException;

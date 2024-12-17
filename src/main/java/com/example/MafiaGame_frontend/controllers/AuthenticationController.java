@@ -46,9 +46,9 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ModelAndView login(AuthenticationRequest authenticationRequest, HttpServletRequest httpServletRequest) {
         try {
-            ResponseEntity<AuthenticationResponse> authenticationResponse = authenticationClient.authenticate(authenticationRequest);
-            sessionManager.setSessionToken(httpServletRequest, authenticationResponse.getBody().getAccessToken(), authenticationResponse.getBody().getUser().getRole().toString());
-            return new ModelAndView(REDIRECTTXT);
+            AuthenticationResponse authenticationResponse = authenticationClient.authenticate(authenticationRequest);
+            sessionManager.setSessionToken(httpServletRequest, authenticationResponse.getAccessToken(), authenticationResponse.getUser().getRole().toString());
+            return new ModelAndView("home");
         } catch (Exception e) {
             ModelAndView modelAndView = new ModelAndView("redirect:/login");
             modelAndView.addObject("error", "Невалидно име или парола");
