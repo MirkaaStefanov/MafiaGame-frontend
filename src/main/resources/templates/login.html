@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="UTF-8">
     <!--    LINKS  -->
 <!--    <th:block th:insert="~{fragments/links}"></th:block>-->
-    <title> Lukeria меню </title>
+    <title> Login </title>
     <link rel="icon" type="image/x-icon" href="img/photos/noImage.png">
 </head>
 <!--<script>-->
@@ -27,6 +28,7 @@
                 <i class="hamburger align-self-center"></i>
             </a>
         </nav>
+
         <main class="d-flex w-100">
             <div class="container d-flex flex-column">
                 <div class="row vh-100">
@@ -44,7 +46,7 @@
                                         <form th:action="@{/login}" method="post">
                                             <div class="mb-3">
                                                 <label class="form-label" style="font-size: 18px;">Имейл</label>
-                                                <input class="form-control form-control-lg" type="email" name="email"
+                                                <input class="form-control form-control-lg" type="email" name="email" th:field="*{email}"
                                                        placeholder="Въведете имейла си"
                                                        style="height: 50px; font-size: 16px;"/>
                                             </div>
@@ -63,7 +65,7 @@
                                                 </div>
                                                 <input type="submit"
                                                        class="btn btn-block btn-primary text-white py-3 px-5"
-                                                       value="Влез">
+                                                       value="Влез" >
                                             </div>
                                             <div class="text-center mt-3">
                                                 <a th:href="@{/user/forgot-password}" class="text-muted"
