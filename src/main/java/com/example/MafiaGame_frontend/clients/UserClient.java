@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "lukeria-erp-user", url = "${backend.base-url}/user")
+@FeignClient(name = "mafia-game-user", url = "${backend.base-url}/user")
 public interface UserClient {
     @GetMapping
     List<UserDTO> getAllUsers(@RequestHeader("Authorization") String auth);
