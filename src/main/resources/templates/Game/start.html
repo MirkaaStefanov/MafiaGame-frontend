@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Game</title>
+</head>
+<body>
+<h1>Start Game</h1>
+
+
+<hr>
+
+<form th:action="@{/game/start}" method="post">
+    <label for="gameId">Game ID:</label>
+    <input type="hidden" id="gameId" th:value="${gameId}" name="gameId" required>
+
+    <label for="killerQuantity">Killer Quantity:</label>
+    <input type="number" id="killerQuantity" name="killerQuantity" required>
+
+    <label for="doctorQuantity">Doctor Quantity:</label>
+    <input type="number" id="doctorQuantity" name="doctorQuantity" required>
+
+    <label for="policeQuantity">Police Quantity:</label>
+    <input type="number" id="policeQuantity" name="policeQuantity" required>
+
+    <button type="submit">Start Game</button>
+</form>
+</body>
+</html>

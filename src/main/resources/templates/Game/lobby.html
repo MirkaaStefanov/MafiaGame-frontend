@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/game/start}" method="post">
+    <input type="hidden" id="gameId" th:value="${gameId}" name="gameId" required>
+
+
+    <button type="submit">Start Game</button>
+</form>
+</body>
+</html>
