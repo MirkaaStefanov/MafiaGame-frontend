@@ -12,6 +12,11 @@
 
     <button type="submit">Create Game</button>
 </form>
+<form th:action="@{/game/enter}" method="post">
+<input type="number" name="gameId">
+
+    <button type="submit">Enter Game</button>
+</form>
 
 </body>
 </html>

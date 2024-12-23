@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<h1 th:text="${gameId}"></h1>
 <form th:action="@{/game/start}" method="post">
     <label for="gameId">Game ID:</label>
     <input type="hidden" id="gameId" th:value="${gameId}" name="gameId" required>

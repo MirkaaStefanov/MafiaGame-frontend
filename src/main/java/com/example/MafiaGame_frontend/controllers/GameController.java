@@ -42,4 +42,11 @@ public class GameController {
         gameClient.startGame(gameId, killerQuantity, doctorQuantity, policeQuantity, token);
         return "redirect:/game-page";
     }
+    @PostMapping("/enter")
+    public  String enterGame(@RequestParam(name="gameId") Long id,HttpServletRequest request) {
+        String token = (String) request.getSession().getAttribute(SESSION_TOKEN);
+        GameDTO gameDTO = gameClient.enterGame(id,token);
+        Long gameId = gameDTO.getId();
+        return "redirect:/game/lobby?gameId=" + gameId;
+    }
 }
