@@ -5,9 +5,18 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="@{/game/start}" method="get">
+<form th:action="@{/game/start}" method="post">
+    <label for="gameId">Game ID:</label>
     <input type="hidden" id="gameId" th:value="${gameId}" name="gameId" required>
 
+    <label for="killerQuantity">Killer Quantity:</label>
+    <input type="number" id="killerQuantity" name="killerQuantity" required>
+
+    <label for="doctorQuantity">Doctor Quantity:</label>
+    <input type="number" id="doctorQuantity" name="doctorQuantity" required>
+
+    <label for="policeQuantity">Police Quantity:</label>
+    <input type="number" id="policeQuantity" name="policeQuantity" required>
 
     <button type="submit">Start Game</button>
 </form>

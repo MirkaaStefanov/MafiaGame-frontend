@@ -35,12 +35,6 @@ public class GameController {
         return "redirect:/game/lobby?gameId=" + gameId;
     }
 
-    @GetMapping("/start")
-    public String startGame(@RequestParam(name = "gameId") Long gameId, Model model){
-        model.addAttribute("gameId", gameId);
-        return "Game/start";
-    }
-
     @PostMapping("/start")
     public String startGame(@RequestParam Long gameId, @RequestParam int killerQuantity, @RequestParam int doctorQuantity, @RequestParam int policeQuantity,  HttpServletRequest request){
         String token = (String) request.getSession().getAttribute(SESSION_TOKEN);
