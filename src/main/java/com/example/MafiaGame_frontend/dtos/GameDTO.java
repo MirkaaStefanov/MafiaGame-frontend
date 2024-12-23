@@ -9,6 +9,6 @@ import java.util.List;
 @Setter
 public class GameDTO {
     private Long id;
-    private List<Long> players;
+    private List<MafiaPlayerDTO> players;
     private boolean active;
 }

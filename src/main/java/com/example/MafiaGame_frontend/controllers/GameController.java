@@ -32,7 +32,7 @@ public class GameController {
         GameDTO gameDTO = gameClient.createGame(token);
         Long gameId = gameDTO.getId();
 
-        return "redirect:/lobby?gameId=" + gameId;
+        return "redirect:/game/lobby?gameId=" + gameId;
     }
 
     @GetMapping("/start")
