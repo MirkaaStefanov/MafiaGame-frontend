@@ -4,41 +4,53 @@
     <meta charset="UTF-8">
     <title>Lobby</title>
     <script>
-    const gameId = [[${gameId}]]; // Thymeleaf will render the game ID here
+        const gameId = [[${gameId}]]; // Thymeleaf should render the game ID here
+        const token = [[${token}]];  // Thymeleaf should render the token here
 
+        if (!gameId || !token) {
+            console.error("Game ID or token is missing!");
+        }
 
-    const token = [[${token}]];  // Replace with actual token retrieval logic
+        const url = `/game/players?gameId=${gameId}`;
 
-    const url = `/game/players?gameId=${gameId}`;
+        function fetchPlayers() {
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error fetching players: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(players => updatePlayerList(players))
+            .catch(error => console.error("Error:", error));
+        }
 
-    function fetchPlayers() {
-    fetch(url, {
-    method: 'GET',
-    headers: {
-    'Authorization': `Bearer ${token}`
-    'Content-Type': 'application/json'
-    }
-    })
-    .then(response => response.json())
-    .then(players => updatePlayerList(players));
-    }
+        function updatePlayerList(players) {
+            const playerListContainer = document.getElementById('player-list');
+            if (!playerListContainer) {
+                console.error("Player list container not found");
+                return;
+            }
 
-    function updatePlayerList(players) {
-    const playerListContainer = document.getElementById('player-list');
-    playerListContainer.innerHTML = ''; // Clear the existing list
+            playerListContainer.innerHTML = ''; // Clear the existing list
+            players.forEach(player => {
+                const listItem = document.createElement('li');
+                listItem.textContent = player.username; // Adjust this based on your User model
+                playerListContainer.appendChild(listItem);
+            });
+        }
 
-    players.forEach(player => {
-    const listItem = document.createElement('li');
-    listItem.textContent = player.username; // Adjust this based on your User model
-    playerListContainer.appendChild(listItem);
-    });
-    }
+        // Poll the server every 5 seconds to get the latest player data
+        setInterval(fetchPlayers, 5000);
 
-    // Poll the server every 5 seconds to get the latest player data
-    setInterval(fetchPlayers, 5000);
-
-    // Initial fetch
-    fetchPlayers();
+        // Initial fetch
+        fetchPlayers();
     </script>
 </head>
 <body>
@@ -61,7 +73,6 @@
 
 <h3>Players in the Game:</h3>
 <ul id="player-list">
-    <!-- Loop through allMafiaPlayers and display each player -->
     <li th:each="player : ${allMafiaPlayers}" class="player-item"
         th:classappend="${player.role == 'NARRATOR' ? ' narrator' : ''} "
         th:text="${player.user.username}">
