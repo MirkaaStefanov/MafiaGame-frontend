@@ -26,5 +26,6 @@ public class User {
 
     private boolean deleted;
     private Long clientID;
+    private Long gameId;
 }
 

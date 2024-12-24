@@ -68,4 +68,11 @@ public class GameController {
         Long gameId = gameDTO.getId();
         return "redirect:/game/lobby?gameId=" + gameId;
     }
+    @PostMapping("/exit")
+    public String exitGame(HttpServletRequest request){
+        String token = (String) request.getSession().getAttribute(SESSION_TOKEN);
+        gameClient.exitGame(token);
+        return "redirect:/";
+    }
+
 }

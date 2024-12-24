@@ -27,4 +27,6 @@ public interface GameClient {
     @GetMapping("/players")
     List<MafiaPlayerDTO> allMafiaPlayersInGame(@RequestParam(name = "gameId") Long gameId, @RequestHeader("Authorization") String auth);
 
+    @PostMapping("/exit")
+    void exitGame(@RequestHeader("Authorization") String auth);
 }

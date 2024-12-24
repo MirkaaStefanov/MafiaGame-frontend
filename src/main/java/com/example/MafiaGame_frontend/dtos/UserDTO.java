@@ -26,4 +26,5 @@ public class UserDTO {
     private String email;
     private Role role;
     private Long clientID;
+    private Long gameId;
 }
