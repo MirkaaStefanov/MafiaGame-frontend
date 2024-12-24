@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 public class MafiaPlayerDTO {
     private Long id;
+    private UserDTO user;
     private PlayerRole role;
     private boolean killed;
     private boolean removed;

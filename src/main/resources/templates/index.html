@@ -5,18 +5,42 @@
     <title>HOME</title>
 </head>
 <body>
+
+<th:block th:if="${session.sessionToken == null}">
+    <li class="sidebar-item">
+        <a id="nav-login" class="sidebar-link" href="/login">
+            <i class="fas fa-registered align-middle"></i> <span class="align-middle">Впиши се</span>
+        </a>
+    </li>
+</th:block>
+<th:block th:if="${session.sessionToken != null}">
+    <li class="sidebar-item">
+        <a id="nav-logout" class="sidebar-link" href="/logout">
+            <i class="fas fa-sign-out-alt"></i> <span class="align-middle">Излез</span>
+        </a>
+    </li>
+    <li class="sidebar-item">
+        <a id="profile" class="sidebar-link" href="/user/profile">
+            <i class="fas fa-user-tie"></i> <span class="align-middle">Профил</span>
+        </a>
+    </li>
+</th:block>
+
 <h1>Hello</h1>
 
+<th:block th:if="${session.sessionToken != null}">
 <form th:action="@{/game/create}" method="post">
-
 
     <button type="submit">Create Game</button>
 </form>
+
 <form th:action="@{/game/enter}" method="post">
 <input type="number" name="gameId">
 
     <button type="submit">Enter Game</button>
 </form>
+</th:block>
+
 
 </body>
 </html>
