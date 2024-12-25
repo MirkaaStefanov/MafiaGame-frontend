@@ -39,6 +39,7 @@ public class AuthenticationController {
 
         }
         return "index";
+
     }
 
     @GetMapping("/login")
