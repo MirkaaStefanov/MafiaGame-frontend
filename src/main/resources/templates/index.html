@@ -39,6 +39,13 @@
 
     <button type="submit">Enter Game</button>
 </form>
+
+    <form th:if="${gameId != null}" th:action="@{/game/lobby}" method="get">
+        <input type="hidden" name="gameId" th:value="${gameId}">
+
+        <button type="submit">My Game</button>
+    </form>
+
 </th:block>
 
 

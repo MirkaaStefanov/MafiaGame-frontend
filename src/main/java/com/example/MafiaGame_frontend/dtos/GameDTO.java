@@ -11,4 +11,5 @@ public class GameDTO {
     private Long id;
     private List<MafiaPlayerDTO> players;
     private boolean active;
+    private boolean playing;
 }

@@ -1,6 +1,6 @@
 package com.example.MafiaGame_frontend.clients;
 
-import com.example.MafiaGame_frontend.dtos.ResultDTO;
+import com.example.MafiaGame_frontend.dtos.VoteResultDTO;
 import com.example.MafiaGame_frontend.dtos.VoteDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -16,5 +16,5 @@ public interface VoteClient {
     ResponseEntity<VoteDTO> vote(@PathVariable(name = "id") Long id, @RequestHeader("Authorization") String auth);
 
     @PostMapping("/all-votes")
-    ResponseEntity<List<ResultDTO>>getAllVotes(@PathVariable(name = "id") Long id, @RequestHeader("Authorization") String auth);
+    ResponseEntity<List<VoteResultDTO>>getAllVotes(@PathVariable(name = "id") Long id, @RequestHeader("Authorization") String auth);
 }
