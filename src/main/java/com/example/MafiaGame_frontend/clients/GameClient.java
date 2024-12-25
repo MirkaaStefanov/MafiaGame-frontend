@@ -2,6 +2,7 @@ package com.example.MafiaGame_frontend.clients;
 
 import com.example.MafiaGame_frontend.dtos.GameDTO;
 import com.example.MafiaGame_frontend.dtos.MafiaPlayerDTO;
+import com.example.MafiaGame_frontend.dtos.ResultDTO;
 import com.example.MafiaGame_frontend.dtos.VoteResultDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,5 +37,5 @@ public interface GameClient {
     void heal(@RequestParam Long playerId ,@RequestHeader("Authorization") String auth);
 
     @GetMapping("/morningResult")
-    VoteResultDTO resultInTheMorning(@RequestHeader("Authorization") String auth);
+    ResultDTO resultInTheMorning(@RequestHeader("Authorization") String auth);
 }
