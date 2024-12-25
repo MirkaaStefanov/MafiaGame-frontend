@@ -5,37 +5,7 @@
     <title>Lobby</title>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
-    <script>
-        // Replace with the user's ID dynamically from Thymeleaf
-        const userId = [[${userId}]]; // Thymeleaf renders the user's ID here
-
-        // Establish WebSocket connection
-        const socket = new SockJS('/websocket'); // Connect to the backend WebSocket endpoint
-        const stompClient = Stomp.over(socket);
-
-        // Connect to the WebSocket server
-        stompClient.connect({}, function () {
-            console.log('Connected to WebSocket server');
-
-            // Subscribe to the user's personal redirect topic
-            stompClient.subscribe(`/topic/redirect/${userId}`, function (message) {
-                const redirectUrl = message.body; // Extract the URL from the message
-                console.log(`Redirecting to: ${redirectUrl}`);
-
-                // Perform the redirection
-                window.location.href = redirectUrl;
-            });
-        });
-
-        // Handle disconnects or errors
-        stompClient.onDisconnect = function () {
-            console.log('Disconnected from WebSocket server');
-        };
-
-        stompClient.onStompError = function (frame) {
-            console.error('WebSocket error:', frame.headers['message']);
-        };
-    </script>
+    <script src="/resources/static/js/redirect.js"></script>
 </head>
 <body>
 

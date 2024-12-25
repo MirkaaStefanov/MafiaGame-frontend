@@ -35,7 +35,7 @@ public class GameController {
         MafiaPlayerDTO mafiaPlayerDTO = mafiaPlayerClient.findMyPlayer(gameId, token);
         List<MafiaPlayerDTO> allMafiaPlayers = gameClient.allMafiaPlayersInGame(gameId, token);
         model.addAttribute("gameId", gameId);
-        model.addAttribute("userId", mafiaPlayerDTO.getUser());
+        model.addAttribute("userId", mafiaPlayerDTO.getUser().getId());
         model.addAttribute("allMafiaPlayers", allMafiaPlayers);
         model.addAttribute("token", token);
         if (mafiaPlayerDTO.getRole() == PlayerRole.NARRATOR) {
