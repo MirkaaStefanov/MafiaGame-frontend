@@ -4,6 +4,7 @@ import com.example.MafiaGame_frontend.clients.GameClient;
 import com.example.MafiaGame_frontend.clients.MafiaPlayerClient;
 import com.example.MafiaGame_frontend.dtos.GameDTO;
 import com.example.MafiaGame_frontend.dtos.MafiaPlayerDTO;
+import com.example.MafiaGame_frontend.dtos.ResultDTO;
 import com.example.MafiaGame_frontend.dtos.VoteResultDTO;
 import com.example.MafiaGame_frontend.enums.PlayerRole;
 import jakarta.servlet.http.HttpServletRequest;
@@ -139,10 +140,10 @@ public class GameController {
     @PostMapping("/result")
     public String result(HttpServletRequest request) {
         String token = (String) request.getSession().getAttribute(SESSION_TOKEN);
-        VoteResultDTO voteResultDTO = gameClient.resultInTheMorning(token);
+        ResultDTO resultDTO = gameClient.resultInTheMorning(token);
 
         // Add the ResultDTO to the redirect attributes
-        request.getSession().setAttribute("resultDTO", voteResultDTO);
+        request.getSession().setAttribute("resultDTO", resultDTO);
 
         // Redirect to the GET mapping
         return "redirect:/game/result";
@@ -150,9 +151,9 @@ public class GameController {
 
     @GetMapping("/result")
     public String result(Model model, HttpServletRequest request) {
-        VoteResultDTO voteResultDTO = (VoteResultDTO) request.getSession().getAttribute("resultDTO");
-        if (voteResultDTO.isGameEnd()) {
-            if (voteResultDTO.isWinners()) {
+        ResultDTO resultDTO = (ResultDTO) request.getSession().getAttribute("resultDTO");
+        if (resultDTO.isGameEnd()) {
+            if (resultDTO.isWinners()) {
                 //TODO to get the killers of the game
                 return "Game/killers-win";
             } else {
@@ -160,7 +161,7 @@ public class GameController {
                 return "Game/villagers-win";
             }
         }
-        model.addAttribute("killed", voteResultDTO.getKilled());
+        model.addAttribute("killed", resultDTO.getKilled());
         return "Game/result-page"; // Return the name of the result view
     }
 }
