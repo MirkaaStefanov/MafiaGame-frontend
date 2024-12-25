@@ -2,6 +2,7 @@ package com.example.MafiaGame_frontend.clients;
 
 import com.example.MafiaGame_frontend.dtos.GameDTO;
 import com.example.MafiaGame_frontend.dtos.MafiaPlayerDTO;
+import com.example.MafiaGame_frontend.dtos.ResultDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,4 +30,13 @@ public interface GameClient {
 
     @PostMapping("/exit")
     void exitGame(@RequestHeader("Authorization") String auth);
+
+    @PostMapping("/kill")
+    void kill(@RequestParam Long playerId, @RequestHeader("Authorization") String auth);
+
+    @PostMapping("/heal")
+    void heal(@RequestParam Long playerId ,@RequestHeader("Authorization") String auth);
+
+    @GetMapping("/morningResult")
+    ResultDTO resultInTheMorning(@RequestHeader("Authorization") String auth);
 }
