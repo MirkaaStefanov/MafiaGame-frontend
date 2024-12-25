@@ -2,21 +2,16 @@ package com.example.MafiaGame_frontend.controllers;
 
 import com.example.MafiaGame_frontend.clients.GameClient;
 import com.example.MafiaGame_frontend.clients.MafiaPlayerClient;
-import com.example.MafiaGame_frontend.clients.UserClient;
 import com.example.MafiaGame_frontend.dtos.GameDTO;
 import com.example.MafiaGame_frontend.dtos.MafiaPlayerDTO;
-import com.example.MafiaGame_frontend.dtos.ResultDTO;
-import com.example.MafiaGame_frontend.dtos.UserDTO;
+import com.example.MafiaGame_frontend.dtos.VoteResultDTO;
 import com.example.MafiaGame_frontend.enums.PlayerRole;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bouncycastle.math.raw.Mod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -144,10 +139,10 @@ public class GameController {
     @PostMapping("/result")
     public String result(HttpServletRequest request) {
         String token = (String) request.getSession().getAttribute(SESSION_TOKEN);
-        ResultDTO resultDTO = gameClient.resultInTheMorning(token);
+        VoteResultDTO voteResultDTO = gameClient.resultInTheMorning(token);
 
         // Add the ResultDTO to the redirect attributes
-        request.getSession().setAttribute("resultDTO", resultDTO);
+        request.getSession().setAttribute("resultDTO", voteResultDTO);
 
         // Redirect to the GET mapping
         return "redirect:/game/result";
@@ -155,9 +150,9 @@ public class GameController {
 
     @GetMapping("/result")
     public String result(Model model, HttpServletRequest request) {
-        ResultDTO resultDTO = (ResultDTO) request.getSession().getAttribute("resultDTO");
-        if (resultDTO.isGameEnd()) {
-            if (resultDTO.isWinners()) {
+        VoteResultDTO voteResultDTO = (VoteResultDTO) request.getSession().getAttribute("resultDTO");
+        if (voteResultDTO.isGameEnd()) {
+            if (voteResultDTO.isWinners()) {
                 //TODO to get the killers of the game
                 return "Game/killers-win";
             } else {
@@ -165,7 +160,7 @@ public class GameController {
                 return "Game/villagers-win";
             }
         }
-        model.addAttribute("killed",resultDTO.getKilled());
+        model.addAttribute("killed", voteResultDTO.getKilled());
         return "Game/result-page"; // Return the name of the result view
     }
 }
